@@ -1,0 +1,23 @@
+# AWS credentials and configuration
+.aws/
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local security reports
+reports/*.json
+reports/*.csv
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
