@@ -85,7 +85,6 @@ The assessment workflow follows these steps:
 6. **Dashboard visualization:** Streamlit presents the saved assessment results.
 7. **Report export:** Users can download reports in supported formats.
 
-
 ## 📁 Project Structure
 
 ```text
