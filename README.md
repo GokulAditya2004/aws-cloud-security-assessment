@@ -10,6 +10,8 @@ This project demonstrates practical cloud security skills by
 assessing selected AWS security configurations, explaining
 potential risks, and providing remediation recommendations.
 
+<img width="1535" height="817" alt="image" src="https://github.com/user-attachments/assets/2b32d117-d2bc-4e6d-970d-c8761ea6a0ee" />
+
 ## Features
 
 - IAM users without MFA
@@ -25,6 +27,8 @@ potential risks, and providing remediation recommendations.
 - JSON and CSV report downloads
 - Interactive Streamlit dashboard
 - Scan status and error reporting
+
+<img width="1523" height="813" alt="image" src="https://github.com/user-attachments/assets/4ca0f63f-9357-4490-bcf8-7c24a5998c9a" />
 
 ## Technology Stack
 
