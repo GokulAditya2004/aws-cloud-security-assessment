@@ -12,8 +12,22 @@ The project demonstrates practical cloud security concepts, including IAM securi
 - Generate structured security reports for further analysis.
 - Demonstrate automated security assessment using Python and Boto3.
 
-### Security Overview
-![Sentinel Overview](screenshots/dashboard-overview.png)
+## 🖥️ Dashboard Preview
+
+### 1. Security Overview
+View the overall security score, severity distribution, and priority findings.
+
+![Sentinel Dashboard Overview](screenshots/dashboard-overview.png)
+
+### 2. Security Findings
+Filter findings by severity, search for resources, and review remediation recommendations.
+
+![Security Findings](screenshots/security-findings.png)
+
+### 3. Assessment Reports
+Review assessment summaries and export findings in JSON or CSV format.
+
+![Security Reports](screenshots/security-reports.png)
 
 ## ✨ Features
 
@@ -44,8 +58,6 @@ The project demonstrates practical cloud security concepts, including IAM securi
 - Download supported reports in JSON and CSV formats.
 - Report scan errors and incomplete assessments.
 
-### Security Findings
-![Security Findings](screenshots/security-findings.png)
 
 ## 🧰 Technology Stack
 
@@ -235,14 +247,3 @@ The project uses the following rating thresholds:
 Use this tool only in AWS accounts you own or are explicitly authorized to assess.
 
 The scanner is intended for assessment and reporting. Review all findings and recommendations before changing AWS resources. Do not use production credentials with unnecessary permissions, and never commit AWS credentials to source control.
-
-**🖥️ Dashboard Preview**
-
-**1. Security Overview**
-View the overall security score, severity distribution, and priority findings.
-
-**2. Security Findings**
-Filter findings by severity, search for resources, and review remediation recommendations.
-
-**3. Assessment Reports**
-Review assessment summaries and export findings in JSON or CSV format.
