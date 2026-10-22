@@ -194,7 +194,6 @@ Latest verified test result: **23 passed**.
 
 Tests use mocked AWS responses where applicable, allowing supported security-check behavior to be tested without making changes to live AWS resources.
 
-### Assessment Reports
 ![Test Passing](screenshots/tests-passing.png)
 
 ## 📈 Security Scoring
