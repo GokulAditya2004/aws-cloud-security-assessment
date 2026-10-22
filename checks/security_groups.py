@@ -1,5 +1,49 @@
 import boto3
 
+def find_exposed_services(permission, risky_ports):
+    from_port = permission.get("FromPort")
+    to_port = permission.get("ToPort")
+
+    # Detect unrestricted all-protocol rules
+    if permission.get("IpProtocol") == "-1":
+        public_ipv4 = any(
+            item.get("CidrIp") == "0.0.0.0/0"
+            for item in permission.get("IpRanges", [])
+        )
+
+        public_ipv6 = any(
+            item.get("CidrIpv6") == "::/0"
+            for item in permission.get("Ipv6Ranges", [])
+        )
+
+        if public_ipv4 or public_ipv6:
+            return ["ALL TRAFFIC"]
+
+        return []
+
+    if from_port is None or to_port is None:
+        return []
+
+    exposed_services = [
+        service
+        for port, service in risky_ports.items()
+        if from_port <= port <= to_port
+    ]
+
+    public_ipv4 = any(
+        item.get("CidrIp") == "0.0.0.0/0"
+        for item in permission.get("IpRanges", [])
+    )
+
+    public_ipv6 = any(
+        item.get("CidrIpv6") == "::/0"
+        for item in permission.get("Ipv6Ranges", [])
+    )
+
+    if public_ipv4 or public_ipv6:
+        return exposed_services
+
+    return []
 
 def check_security_groups():
     ec2 = boto3.client("ec2")
@@ -39,22 +83,34 @@ def check_security_groups():
 
                 for permission in matching_sg["IpPermissions"]:
 
-                    from_port = permission.get("FromPort")
+                    exposed_services = find_exposed_services(
+                        permission,
+                        risky_ports
+                    )
 
-                    if from_port not in risky_ports:
+                    if not exposed_services:
                         continue
 
-                    for ip_range in permission.get("IpRanges", []):
-
-                        if ip_range["CidrIp"] == "0.0.0.0/0":
-
-                            findings.append({
-                                "check": f"Publicly exposed {risky_ports[from_port]}",
-                                "severity": "HIGH",
-                                "resource": instance_id,
-                                "recommendation": (
-                                    "Restrict access to trusted IP addresses."
-                                )
-                            })
+                    findings.append({
+                        "check": (
+                            f"Publicly exposed "
+                            f"{', '.join(exposed_services)}"
+                        ),
+                        "severity": "HIGH",
+                        "resource": instance_id,
+                        "risk": (
+                            "All protocols and ports are accessible from the internet."
+                            if "ALL TRAFFIC" in exposed_services
+                            else (
+                                f"{', '.join(exposed_services)} is accessible from any "
+                                "IPv4 or IPv6 address, increasing the risk of "
+                                "unauthorized access."
+                            )
+                        ),
+                        "recommendation": (
+                            "Restrict inbound access to trusted IP "
+                            "addresses and required network ranges."
+                        )
+                    })
 
     return findings
