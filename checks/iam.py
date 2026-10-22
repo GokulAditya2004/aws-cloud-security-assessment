@@ -32,6 +32,28 @@ def check_excessive_permissions():
     response = iam.list_users()
     findings = []
 
+    def has_wildcard_action(policy_document):
+        statements = policy_document.get("Statement", [])
+
+        if isinstance(statements, dict):
+            statements = [statements]
+
+        for statement in statements:
+            # Only flag permissions that allow actions
+            if statement.get("Effect", "Allow") != "Allow":
+                continue
+
+            actions = statement.get("Action", [])
+
+            if isinstance(actions, str):
+                actions = [actions]
+
+            for action in actions:
+                if action == "*" or action.endswith(":*"):
+                    return True
+
+        return False
+
     for user in response["Users"]:
         username = user["UserName"]
 
@@ -43,7 +65,6 @@ def check_excessive_permissions():
         for policy in policies["AttachedPolicies"]:
             policy_name = policy["PolicyName"]
 
-            # Detect AdministratorAccess
             if policy_name == "AdministratorAccess":
                 findings.append({
                     "check": "IAM User with AdministratorAccess",
@@ -55,7 +76,6 @@ def check_excessive_permissions():
                     )
                 })
 
-            # Get the actual managed policy document
             policy_version = iam.get_policy(
                 PolicyArn=policy["PolicyArn"]
             )["Policy"]["DefaultVersionId"]
@@ -65,22 +85,16 @@ def check_excessive_permissions():
                 VersionId=policy_version
             )["PolicyVersion"]["Document"]
 
-            for statement in policy_document.get("Statement", []):
-                actions = statement.get("Action", [])
-
-                if isinstance(actions, str):
-                    actions = [actions]
-
-                if "*" in actions:
-                    findings.append({
-                        "check": "IAM User with Wildcard Action Permission",
-                        "severity": "HIGH",
-                        "resource": username,
-                        "recommendation": (
-                            "Restrict wildcard actions and apply "
-                            "least-privilege permissions."
-                        )
-                    })
+            if has_wildcard_action(policy_document):
+                findings.append({
+                    "check": "IAM Policy with Wildcard Actions",
+                    "severity": "HIGH",
+                    "resource": username,
+                    "recommendation": (
+                        "Restrict wildcard actions and apply "
+                        "least-privilege permissions."
+                    )
+                })
 
         # 2. Check inline policies
         inline_policies = iam.list_user_policies(
@@ -95,22 +109,16 @@ def check_excessive_permissions():
 
             policy_document = policy["PolicyDocument"]
 
-            for statement in policy_document.get("Statement", []):
-                actions = statement.get("Action", [])
-
-                if isinstance(actions, str):
-                    actions = [actions]
-
-                if "*" in actions:
-                    findings.append({
-                        "check": "IAM User with Wildcard Action Permission",
-                        "severity": "HIGH",
-                        "resource": username,
-                        "recommendation": (
-                            "Restrict wildcard actions and apply "
-                            "least-privilege permissions."
-                        )
-                    })
+            if has_wildcard_action(policy_document):
+                findings.append({
+                    "check": "IAM Policy with Wildcard Actions",
+                    "severity": "HIGH",
+                    "resource": username,
+                    "recommendation": (
+                        "Restrict wildcard actions and apply "
+                        "least-privilege permissions."
+                    )
+                })
 
     return findings
 
