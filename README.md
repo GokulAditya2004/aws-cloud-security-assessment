@@ -202,7 +202,7 @@ The project includes **43 automated tests**, covering:
 - EC2/EBS encryption
 - Security score calculation and report generation
 - Scanner error handling and partial scan reporting
-
+![Test Passing](screenshots/tests-passing.png)
 Run the test suite:
 
 ```powershell
