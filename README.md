@@ -89,21 +89,25 @@ The assessment workflow follows these steps:
 
 ```text
 aws-cloud-security-assessment/
-├── scanner.py
-├── dashboard.py
-├── requirements.txt
-├── README.md
-├── .gitignore
 ├── checks/
 │   ├── iam.py
 │   ├── s3.py
 │   ├── security_groups.py
 │   ├── cloudtrail.py
 │   └── ec2.py
-└── tests/
-    ├── test_iam.py
-    ├── test_scanner.py
-    └── test_security_groups.py
+├── reports/
+├── tests/
+│   ├── test_iam.py
+│   ├── test_s3.py
+│   ├── test_security_groups.py
+│   ├── test_cloudtrail.py
+│   ├── test_ec2.py
+│   ├── test_scanner.py
+│   └── test_report.py
+├── scanner.py
+├── dashboard.py
+├── requirements.txt
+└── .gitignore
 ```
 
 The `reports/` directory is created when scan results are saved. Generated reports are excluded from version control.
@@ -187,10 +191,22 @@ Run the test suite with:
 ```bash
 python -m pytest -v
 ```
+## Testing
 
-The current test suite contains **23 tests**, covering IAM checks, security group exposure detection, and scanner error handling.
+The project includes **43 automated tests**, covering:
 
-Latest verified test result: **23 passed**.
+- IAM security checks
+- S3 bucket security and versioning
+- Security Group exposure, including IPv4 and IPv6
+- CloudTrail configuration and logging
+- EC2/EBS encryption
+- Security score calculation and report generation
+- Scanner error handling and partial scan reporting
+
+Run the test suite:
+
+```powershell
+python -m pytest tests/ -v
 
 Tests use mocked AWS responses where applicable, allowing supported security-check behavior to be tested without making changes to live AWS resources.
 
@@ -208,6 +224,7 @@ The tool calculates a project-defined security score starting at 100.
 | Low | 3 |
 
 The score is reduced according to detected findings and is bounded between 0 and 100.
+The security score is a project-defined assessment metric intended to summarize detected findings. It is not an official AWS security rating or a certification of compliance.
 
 The project uses the following rating thresholds:
 
