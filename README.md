@@ -235,3 +235,14 @@ The project uses the following rating thresholds:
 Use this tool only in AWS accounts you own or are explicitly authorized to assess.
 
 The scanner is intended for assessment and reporting. Review all findings and recommendations before changing AWS resources. Do not use production credentials with unnecessary permissions, and never commit AWS credentials to source control.
+
+**🖥️ Dashboard Preview**
+
+**1. Security Overview**
+View the overall security score, severity distribution, and priority findings.
+
+**2. Security Findings**
+Filter findings by severity, search for resources, and review remediation recommendations.
+
+**3. Assessment Reports**
+Review assessment summaries and export findings in JSON or CSV format.
