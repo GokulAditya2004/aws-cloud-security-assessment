@@ -1,10 +1,10 @@
-# 🛡️ AWS Cloud Security Assessment Tool
+# AWS Cloud Security Assessment Tool
 
 A Python-based AWS security assessment tool that identifies common cloud security misconfigurations, assigns severity levels, and presents findings through an interactive Streamlit dashboard.
 
 The project demonstrates practical cloud security concepts, including IAM security, network exposure analysis, storage encryption, and security monitoring configuration.
 
-## 🎯 Project Objectives
+## Project Objectives
 
 - Identify common security misconfigurations in AWS environments.
 - Highlight potentially excessive IAM permissions and exposed network services.
@@ -12,7 +12,7 @@ The project demonstrates practical cloud security concepts, including IAM securi
 - Generate structured security reports for further analysis.
 - Demonstrate automated security assessment using Python and Boto3.
 
-## 🖥️ Dashboard Preview
+## Dashboard Preview
 
 ### 1. Security Overview
 View the overall security score, severity distribution, and priority findings.
@@ -29,7 +29,7 @@ Review assessment summaries and export findings in JSON or CSV format.
 
 ![Security Reports](screenshots/security-reports.png)
 
-## ✨ Features
+## Features
 
 ### Identity and Access Management (IAM)
 - Detect IAM users without MFA.
@@ -59,7 +59,7 @@ Review assessment summaries and export findings in JSON or CSV format.
 - Report scan errors and incomplete assessments.
 
 
-## 🧰 Technology Stack
+## Technology Stack
 
 | Technology | Purpose |
 |---|---|
@@ -73,7 +73,7 @@ Review assessment summaries and export findings in JSON or CSV format.
 | JSON | Structured security reports |
 | Pytest | Automated testing |
 
-## 🏗️ Architecture
+## Architecture
 
 The assessment workflow follows these steps:
 
@@ -85,7 +85,7 @@ The assessment workflow follows these steps:
 6. **Dashboard visualization:** Streamlit presents the saved assessment results.
 7. **Report export:** Users can download reports in supported formats.
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 aws-cloud-security-assessment/
@@ -112,7 +112,7 @@ aws-cloud-security-assessment/
 
 The `reports/` directory is created when scan results are saved. Generated reports are excluded from version control.
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 - Python 3
 - An AWS account you own or are authorized to assess
@@ -121,7 +121,7 @@ The `reports/` directory is created when scan results are saved. Generated repor
 
 The scanner should use a dedicated IAM identity with only the permissions required to perform its assessments.
 
-## 🚀 Installation and Setup
+## Installation and Setup
 
 ### 1. Clone the repository
 
@@ -156,7 +156,7 @@ aws sts get-caller-identity
 
 Confirm that the displayed identity belongs to the AWS account you intend to assess.
 
-## 🔍 Running the Assessment
+## Running the Assessment
 
 From the project directory, run:
 
@@ -172,7 +172,7 @@ reports/security_report.json
 
 Review the generated report for findings, severity levels, recommendations, and scan status.
 
-## 📊 Launching the Dashboard
+## Launching the Dashboard
 
 Run:
 
@@ -184,7 +184,7 @@ Open the local URL displayed in the terminal.
 
 The dashboard displays the latest saved assessment report. Use the dashboard's scan controls to initiate a new assessment when available.
 
-## 🧪 Running Automated Tests
+## Running Automated Tests
 
 Run the test suite with:
 
@@ -212,7 +212,7 @@ Tests use mocked AWS responses where applicable, allowing supported security-che
 
 ![Test Passing](screenshots/tests-passing.png)
 
-## 📈 Security Scoring
+## Security Scoring
 
 The tool calculates a project-defined security score starting at 100.
 
@@ -237,7 +237,7 @@ The project uses the following rating thresholds:
 
 **Important:** This scoring system is an experimental project metric. It is not an official AWS security rating, compliance assessment, or guarantee of security.
 
-## ⚠️ Limitations
+## Limitations
 
 - The tool checks selected AWS security configurations rather than performing a complete security audit.
 - IAM policy analysis does not cover every possible policy structure or permission risk.
@@ -247,7 +247,7 @@ The project uses the following rating thresholds:
 - A successful scan does not guarantee that an AWS environment is secure.
 - Remediation recommendations require review before being applied, particularly in production environments.
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Expand IAM policy analysis and permission-risk detection.
 - Add broader security checks and improve coverage.
@@ -255,7 +255,7 @@ The project uses the following rating thresholds:
 - Improve dashboard filtering and report comparison.
 - Add integration tests against a dedicated, isolated AWS test environment.
 
-## 🔐 Security Disclaimer
+## Security Disclaimer
 
 Use this tool only in AWS accounts you own or are explicitly authorized to assess.
 
